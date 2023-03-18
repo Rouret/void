@@ -1,28 +1,12 @@
-<h3 align="center">VOid</h3>
+<h3 align="center">Void</h3>
   <p align="center">
     By Rouret Lucas
   </p>
 
-Basic template for game development using:
-- weppack
-- typescript
-- nodemon
-- express 
-- socket.io 
 
-Put your assets in the assets folder and your code in the src folder.
+### Add keyboard event:
 
-Just tape : 
-```bash
-npm install
-```
-
-And then : 
-```bash
-npm run start:dev
-```
-
-```bash
-npm run start:prod
-```
+1. Ajouter l'action dans [Keyboard.ts](./src/frontend/Keyboard.ts), KeyboardConfig
+2. Puis KeyboardState et Keyboard
+3. Et ajouter dans le switch "_update" de KeyboardState
 

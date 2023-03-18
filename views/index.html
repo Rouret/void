@@ -15,7 +15,14 @@
             padding: 0;
             box-sizing: border-box;
         }
+        #ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
     </style>
+    <canvas id="ui"></canvas>
     <canvas id="app"></canvas>
     <script src="/socket.io/socket.io.js"></script>
     <script src="index.js"></script>

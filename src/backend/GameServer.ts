@@ -44,12 +44,13 @@ export default class GameServer {
         const now = Date.now();
         const dt = now - this.lastUpdate;
         this.lastUpdate = now;
-        this._update(dt);
+        this.game.update(dt);
+
+        const gameState = this.game.getGameState();
+
+        this.io.emit("update", gameState);
     }
 
-    _update(dt) {
-        //console.log("GameServer update");
-    }
 
 	public start() {
 		this._setupExpress();

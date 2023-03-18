@@ -5,6 +5,8 @@ import {SocketEvents, SocketManager} from "./managers/SocketManager";
 import Coordinate from "./models/Coordinate";
 import Log from "./utils/Log";
 import {Server} from "socket.io";
+import GameState from "./models/GameState";
+import {removeAllPrivateProperties} from "./utils";
 
 
 export default class Game{
@@ -26,6 +28,10 @@ export default class Game{
         this.socketManager.addTaskEvent(SocketEvents.TEST, (data) => {
             console.log(data);
         })
+    }
+
+    update(dt){
+
     }
 
     //Emit event from SocketManager
@@ -54,5 +60,10 @@ export default class Game{
             Log.error(`Player with ${socket.id} socketId not found`)
         }
     }
+
+    getGameState(){
+        return removeAllPrivateProperties(new GameState(this.players));
+    }
+
 
 }
