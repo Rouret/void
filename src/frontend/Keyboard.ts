@@ -2,11 +2,14 @@ import Client from "./Client";
 import Log from "../backend/utils/Log";
 
 export default class Keyboard {
-    public keyboardConfig: KeyboardConfig = new KeyboardConfig(
-        "z",
-        "s",
-        "q",
-        "d")
+    public keyboardConfig: KeyboardConfig;
+
+    public keyboardState: KeyboardState;
+
+    constructor() {
+        this.keyboardConfig = new KeyboardConfig("z", "s", "q", "d");
+        this.keyboardState= new KeyboardState(this)
+    }
 }
 
 class KeyboardConfig {
@@ -24,7 +27,7 @@ export class KeyboardState{
     public left: boolean = false;
     public right: boolean = false;
 
-    constructor(private _client:Client,private _keyboard:Keyboard) {
+    constructor(private _keyboard:Keyboard) {
         window.addEventListener("keydown", (e) => {
             this._update(e.key,true)
         });

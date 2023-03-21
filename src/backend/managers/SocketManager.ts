@@ -23,7 +23,7 @@ export class SocketManager{
                 Log.debug(
                     `Player disconnected: ${socket.id}.`
                 );
-                this._game._socketEvent(SocketEvents.CONNECTION, socket);
+                this._game._socketEvent(SocketEvents.DISCONNECT, socket);
             });
         });
     }
@@ -46,7 +46,6 @@ export class SocketManager{
  class SocketTask {
     eventName: string;
     task: (...args) => void;
-
     constructor(eventName: string, task: (...args) => void) {
         this.eventName = eventName;
         this.task = task;
@@ -55,7 +54,7 @@ export class SocketManager{
 export enum SocketEvents{
     CONNECTION = "connection",
     DISCONNECT = "disconnect",
-    TEST = "test"
+    UPDATE = "update",
 }
 
 

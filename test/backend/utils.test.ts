@@ -17,6 +17,12 @@ class C {
         private _a: A
     ) {}
 }
+class D {
+    constructor(
+        private _as: A[]
+    ) {}
+}
+
 
 describe("utils.ts", () => {
     describe("removeAllPrivateProperties", () => {
@@ -29,7 +35,9 @@ describe("utils.ts", () => {
         test("should remove private properties with the '_'", () => {
             const a = new A(1);
             const c = new C(a);
+            const d = new D([a]);
             expect(removeAllPrivateProperties(c)).toEqual({});
+            expect(removeAllPrivateProperties(d)).toEqual({});
         });
     });
     describe("clone", () => {

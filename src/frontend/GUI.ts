@@ -1,4 +1,6 @@
 import Log from "../backend/utils/Log";
+import Client from "./Client";
+import Keyboard, {KeyboardState} from "./Keyboard";
 
 export default class GUI{
     private _canvas: HTMLCanvasElement = document.getElementById(
@@ -10,9 +12,11 @@ export default class GUI{
     ) as HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
     private _UIctx: CanvasRenderingContext2D;
-    public isUIHaveChanged = false;
+    public isUIHaveChanged = true;
+    private _keyboard: Keyboard;
 
-    constructor() {
+    constructor(private _client: Client) {
+
         this._ctx = this._canvas.getContext("2d");
         this._UIctx = this._UIcanvas.getContext("2d");
 
@@ -22,18 +26,18 @@ export default class GUI{
         this._UIcanvas.height = window.document.documentElement.clientHeight - 4;
 
         if (this._canvas.getContext("2d") && this._UIcanvas.getContext("2d")) {
-            this._init();
+            this._keyboard = new Keyboard();
         }else{
             Log.error("Canvas is not supported");
         }
     }
 
-    _init(){
-        this.drawUI();
+    init(){
         this._loop();
     }
 
     _loop(){
+        if(this._client.currentGameState.currentPlayer === null) requestAnimationFrame(this._loop.bind(this))
         this.draw();
 
         if(this.isUIHaveChanged){
@@ -65,8 +69,11 @@ export default class GUI{
         this._UIctx.fillText("Player", 100, 35);
 
         //hp bar
-        this._UIctx.fillStyle = "#ff0000";
+        this._UIctx.fillStyle = "#AAA";
         this._UIctx.fillRect(100, 45, 150, 10);
+        this._UIctx.fillStyle = "#ff0000";
+        const newWidth = (this._client.currentGameState.currentPlayer.maxHp * 150) / this._client.currentGameState.currentPlayer.hp;
+        this._UIctx.fillRect(100, 45, newWidth, 10);
 
         //endurance bar
         this._UIctx.fillStyle = "#00ff00";

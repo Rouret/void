@@ -11,23 +11,17 @@ import {removeAllPrivateProperties} from "./utils";
 
 export default class Game{
     public world : World;
-    public players : Player[];
+    public players : Array<Player> = [];
     public socketManager : SocketManager;
 
     constructor(
-        public io: Server
+        io: Server
     ){
-
         this.socketManager = new SocketManager(this,io);
 
         //TODO: load world from database ?
         const worldDimensions = new Dimension(1000, 1000);
         this.world = new World("default_world",worldDimensions);
-        this.players = [];
-
-        this.socketManager.addTaskEvent(SocketEvents.TEST, (data) => {
-            console.log(data);
-        })
     }
 
     update(dt){
@@ -52,7 +46,7 @@ export default class Game{
     }
 
     _onPlayerDisconnected(socket: any){
-        const player = this.players.find(p => p.id == socket.id);
+        const player = this.players.find(p => p._socket.id === socket.id);
         if(player){
             const index = this.players.indexOf(player);
             this.players.splice(index, 1);
@@ -64,6 +58,4 @@ export default class Game{
     getGameState(){
         return removeAllPrivateProperties(new GameState(this.players));
     }
-
-
 }

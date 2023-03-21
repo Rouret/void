@@ -3,6 +3,7 @@ import path from "path";
 import http from "http";
 import {Server, Socket} from "socket.io";
 import Game from "./Game";
+import {SocketEvents} from "./managers/SocketManager";
 
 export default class GameServer {
 	app: express.Application;
@@ -48,7 +49,7 @@ export default class GameServer {
 
         const gameState = this.game.getGameState();
 
-        this.io.emit("update", gameState);
+        this.io.emit(SocketEvents.UPDATE, gameState);
     }
 
 

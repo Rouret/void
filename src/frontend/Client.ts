@@ -2,23 +2,23 @@ import {SocketEvents} from "../backend/managers/SocketManager";
 import Log from "../backend/utils/Log";
 import SocketClient from "./SocketClient";
 import GUI from "./GUI";
-import Keyboard, {KeyboardState} from "./Keyboard";
+import ClientGameState from "./ClientGameState";
 
 export default class Client{
 
-    private _socketClient: SocketClient;
-    private _gui: GUI;
-    private _keyboard: Keyboard;
-    private _keyboardState: KeyboardState;
+    private socketClient: SocketClient;
+    public gui: GUI;
+
+
+    public currentGameState: ClientGameState;
     constructor() {
-        this._socketClient = new SocketClient();
-        this._gui = new GUI();
-        this._keyboard = new Keyboard();
-        this._keyboardState = new KeyboardState(this,this._keyboard);
+        this.socketClient = new SocketClient(this);
+        this.gui = new GUI(this);
     }
     _socketEvent(event: SocketEvents){
         Log.debug(`Client: ${event} event received`)
     }
+
 
     _keyboardEvent(){
         //Keyboard events

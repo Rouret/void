@@ -11,7 +11,7 @@ export default class Player {
     public sprinting = false;
     constructor(
         public id: string,
-        private _socket: Socket,
+        public _socket: Socket,
         public name: string,
         private coordinate: Coordinate,
     ){}

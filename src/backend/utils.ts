@@ -1,18 +1,22 @@
-export const removeAllPrivateProperties = function (object: any) {
+export const removeAllPrivateProperties = function (object: any, processedObjects: any[] = []) {
+    if (processedObjects.includes(object)) {
+        return object;
+    }
+    processedObjects.push(object);
     object = clone(object);
+    let nextObject = {};
     for (const key in object) {
         if (Object.prototype.hasOwnProperty.call(object, key)) {
             if (key.startsWith("_")) {
-                console.log("DELETE", key);
                 delete object[key];
             } else if (typeof object[key] === "object") {
-                console.log("RECUR", key);
-                removeAllPrivateProperties(object[key]);
+                object[key] = removeAllPrivateProperties(object[key], processedObjects);
             }
         }
     }
     return object;
 }
+
 export function clone(object: any) {
     return { ...object}
 }
